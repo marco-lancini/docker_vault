@@ -1,0 +1,48 @@
+version: '2'
+
+services:    
+    consul:
+        container_name: consul
+        image: consul:latest
+        ports:
+            - "8500:8500"
+            - "8300:8300"
+        volumes:
+            - ./config:/config
+            - ./_data/consul:/data
+        command: agent -server -data-dir=/data -bind 0.0.0.0 -client 0.0.0.0 -bootstrap-expect=1
+
+    vault:
+        container_name: vault
+        image: vault
+        links:
+            - consul:consul
+        depends_on:
+            - consul
+        ports:
+            - "8200:8200"
+        volumes_from:
+            - consul
+        cap_add:
+            - IPC_LOCK
+        command: server -config=/config/vault.hcl
+
+    webui:
+        container_name: webui
+        image: djenriquez/vault-ui
+        ports:
+            - "8000:8000"
+        links:
+            - vault:vault
+        environment:
+            NODE_TLS_REJECT_UNAUTHORIZED: 0
+            VAULT_URL_DEFAULT: https://vault:8200
+
+    backup:
+        container_name: backup
+        build: backup/
+        links:
+            - consul:consul
+        volumes:
+            - ./_data/backup:/backup/
+        command: consul-backup
