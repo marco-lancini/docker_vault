@@ -1,6 +1,6 @@
 # Docker + Consul + Vault
 
-Full description can be found online: https://www.marcolancini.it//2017/blog-vault/
+Full description can be found online: https://www.marcolancini.it/2017/blog-vault/
 
 
 ## Usage
