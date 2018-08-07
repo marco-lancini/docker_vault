@@ -1,6 +1,10 @@
 # Docker + Consul + Vault
 
-Full description can be found online: https://www.marcolancini.it/2017/blog-vault/
+How to use docker-compose to spin up a Vault instance backed by Consul.
+
+A full description can be found on my website: https://www.marcolancini.it/2017/blog-vault/
+
+![Vault UI](https://www.marcolancini.it/images/posts/blog_vault_2.jpg)
 
 
 ## Usage
